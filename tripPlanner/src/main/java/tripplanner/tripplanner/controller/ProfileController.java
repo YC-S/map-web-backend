@@ -4,6 +4,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import tripplanner.tripplanner.model.Profile;
 import tripplanner.tripplanner.service.ProfileService;
 
@@ -27,6 +28,11 @@ public class ProfileController {
 	@Autowired
 	private ProfileService profileService;
 	
+	@Autowired
+	ServletContext context;
+	
+	// Need to change this folder path to your own local path
+	String folder = "/Users/dengyang/eclipse-workspace/profile_images/";
 	
 	@GetMapping("/profile/{profileId}")
 	public Profile getProfileById(@PathVariable int profileId) {
@@ -44,9 +50,15 @@ public class ProfileController {
 			throw new RuntimeException("Profile id not found - " + profileId);
 		}
 		profileService.deleteProfileById(profileId);
-		// TODO: delete the profile image from server
-		
-		
+		// delete the profile image from server
+		Path path = Paths.get(folder + profileId + ".png");
+		if(Files.exists(path)) {
+			try {
+				Files.delete(path);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return "Deleted employee id - " + profileId;
 	}
 	
@@ -56,7 +68,7 @@ public class ProfileController {
 		profileService.addOrUpdateProfile(profile);
 		// save profile image to disk
 		try {
-			saveProfileImage(file);
+			saveProfileImage(file, profile.getId());
 		} catch (Exception e) {
 			System.out.println("addPrfile failure!");
 			e.printStackTrace();
@@ -66,10 +78,9 @@ public class ProfileController {
 	
 	/** This method is used to save profile image to server disk
 	 */
-	public void saveProfileImage(MultipartFile imageFile) throws Exception {
-		String folder = "/Users/dengyang/eclipse-workspace/profile_images/";
+	public void saveProfileImage(MultipartFile imageFile, int profileId) throws Exception {
 		byte[] bytes = imageFile.getBytes();
-		Path path = Paths.get(folder + imageFile.getOriginalFilename());
+		Path path = Paths.get(folder + profileId + ".png");
 		Files.write(path, bytes);
 	}
 
