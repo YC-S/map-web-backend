@@ -22,7 +22,7 @@ public class SearchEventFromYelp implements SearchEventFromExternalClient {
     private static final String PATH = "/businesses/search";
     private static final String DEFAULT_Category = "parks,arts,localflavor,publicservicesgovt";
     private static final int DEFAULT_RADIUS = 40000;
-    private static final String API_KEY = "xxxxx";
+    private static final String API_KEY = "Mz4oevIDTzdPJTKqNBDQJyrpgvFL14ZPAk-EPxoKMC55jgurf1aOdp4mZMogJniTWUvoGn7S2eq0DCCdREKWF_gSyHbN2GpzL92k1kf1DCHo5c_GkkFy0-jLcv_xXXYx";
     private static final int LIMIT = 50;
     private static final int OFFSET = 0;
     private static final String SORT_BY = "review_count";
