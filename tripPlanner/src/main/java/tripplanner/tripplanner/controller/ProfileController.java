@@ -65,7 +65,7 @@ public class ProfileController {
 		try {
 			saveProfileImage(file, profile.getId());
 		} catch (Exception e) {
-			System.out.println("addPrfile failure!");
+			System.out.println("addProfile failure!");
 			e.printStackTrace();
 		}
 	}
