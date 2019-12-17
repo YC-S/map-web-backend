@@ -7,6 +7,8 @@ import java.util.List;
 public interface ItemService {
 
 	public void addAllItems(Item[] itemArray);
+	
+	public List<Item> findAllItems();
 
     public void addItem(Item item);
     

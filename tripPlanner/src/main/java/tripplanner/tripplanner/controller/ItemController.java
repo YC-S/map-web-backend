@@ -61,7 +61,7 @@ package tripplanner.tripplanner.controller;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tripplanner.tripplanner.dao.ItemDao;
+
 import tripplanner.tripplanner.externalClient.SearchEventFromYelp;
 import tripplanner.tripplanner.model.Item;
 import tripplanner.tripplanner.service.ItemService;
@@ -94,5 +94,29 @@ public class ItemController {
         return "Item are not added successfully or there are no more items in this area.";
     }
     
+    @PostMapping("/addItem")
+    public void addItem(Item item) {
+    	itemService.addItem(item);
+    }
     
+    @PutMapping("/addItem")
+    public void updateItem(Item item) {
+    	itemService.addItem(item);
+    }
+    
+    @GetMapping("/items/{itemId}")
+    public Item getItemById(@PathVariable String itemId) {
+    	Item theItem = itemService.getItemById(itemId);
+    	return theItem;
+    }
+    
+    @DeleteMapping("/items/{itemId}")
+    public String deleteItemById(@PathVariable String itemId) {
+    	Item foundItem= itemService.getItemById(itemId);
+		if(foundItem == null) {
+			throw new RuntimeException("Item id not found - " + itemId);
+		}
+		itemService.deleteItemById(itemId);	
+		return "Deleted item id - " + itemId;
+    }  
 }

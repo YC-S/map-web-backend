@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import tripplanner.tripplanner.dao.ItemDao;
 import tripplanner.tripplanner.model.Item;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,11 @@ public class ItemServiceImpl implements ItemService {
 		for (Item item : itemArray) {
             itemDao.save(item);
         }
+	}
+	
+	@Override
+	public List<Item> findAllItems() {
+		return itemDao.findAll();
 	}
 
 	@Override
