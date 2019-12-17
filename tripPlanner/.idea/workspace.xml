@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f5e22033-94a1-49a7-b9b4-da24e1046726" name="Default Changelist" comment="add user test">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_2_2_1_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_config_5_2_1_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tripplanner/tripplanner/controller/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tripplanner/tripplanner/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tripplanner/tripplanner/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trip-planner.iml" beforeDir="false" afterPath="$PROJECT_DIR$/trip-planner.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +161,7 @@
       <workItem from="1576443843225" duration="2390000" />
       <workItem from="1576505881489" duration="15000" />
       <workItem from="1576554220896" duration="816000" />
-      <workItem from="1576555140289" duration="823000" />
+      <workItem from="1576555140289" duration="954000" />
     </task>
     <servers />
   </component>
