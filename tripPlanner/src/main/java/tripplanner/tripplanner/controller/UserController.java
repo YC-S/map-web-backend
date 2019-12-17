@@ -1,4 +1,4 @@
-//package tripplanner.tripplanner.controller;
+package tripplanner.tripplanner.controller;
 //
 ////@RestController
 ////@CrossOrigin(origins = "http://localhost:3000")
@@ -26,3 +26,17 @@
 //@RequestMapping(value = "/user/registration", method = RequestMethod.GET)
 //public String showRegistrationForm()
 //
+
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.web.bind.annotation.CrossOrigin;
+//import org.springframework.web.bind.annotation.RestController;
+//import tripplanner.tripplanner.service.UserService;
+//
+//@RestController
+//@CrossOrigin(origins="http://localhost:3000")
+//public class UserController {
+//  @Autowired
+//  private UserService userService;
+//
+//
+//}
