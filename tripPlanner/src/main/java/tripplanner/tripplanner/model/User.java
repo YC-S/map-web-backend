@@ -14,52 +14,51 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class User implements Serializable{
 
-	private static final long serialVersionUID = -3427787029195454928L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
-	@Column(name="emailId")
-	private String emailId;
-	
-	@Column(name="password")
-	private String password;
 
-	@OneToOne
-	private Profile cores_profile;
+  private static final long serialVersionUID = -3427787029195454928L;
 
-	public int getId() {
-		return id;
-	}
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  @Column(name="emailId")
+  private String emailId;
 
-	public String getEmailId() {
-		return emailId;
-	}
+  @Column(name="password")
+  private String password;
 
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
+  @OneToOne
+  private Profile cores_profile;
 
-	public String getPassword() {
-		return password;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public Profile getCores_profile() {
-		return cores_profile;
-	}
+  public String getEmailId() {
+    return emailId;
+  }
 
-	public void setCores_profile(Profile cores_profile) {
-		this.cores_profile = cores_profile;
-	}
+  public void setEmailId(String emailId) {
+    this.emailId = emailId;
+  }
 
-	
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public Profile getCores_profile() {
+    return cores_profile;
+  }
+
+  public void setCores_profile(Profile cores_profile) {
+    this.cores_profile = cores_profile;
+  }
 }

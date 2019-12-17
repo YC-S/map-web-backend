@@ -1,6 +1,5 @@
 package tripplanner.tripplanner.model;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +33,10 @@ public class Profile {
 	
 	@Column(name="description")
 	private String description;
-	
+
+	@Column(name="privacy")
+	private boolean privacy;
+
 	@Lob
 	@Transient
 	private byte[] profileImage;
@@ -89,6 +91,14 @@ public class Profile {
 	public void setProfileImage(byte[] profileImage) {
 		this.profileImage = profileImage;
 	}
-	
+
+	public boolean isPrivacy() {
+		return privacy;
+	}
+
+	public void setPrivacy(boolean privacy) {
+		this.privacy = privacy;
+	}
+
 	
 }

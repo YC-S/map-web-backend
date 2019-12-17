@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +31,8 @@ public class ProfileController {
 	ServletContext context;
 	
 	// Need to change this folder path to your own local path
-	String folder = "/Users/dengyang/eclipse-workspace/profile_images/";
+
+	String folder = "/Users/shiyuanchen/Desktop/profile_images/";
 	
 	@GetMapping("/profile/{profileId}")
 	public Profile getProfileById(@PathVariable int profileId) {
@@ -70,7 +70,8 @@ public class ProfileController {
 		try {
 			saveProfileImage(file, profile.getId());
 		} catch (Exception e) {
-			System.out.println("addPrfile failure!");
+
+			System.out.println("addProfile failure!");
 			e.printStackTrace();
 		}
 	}
