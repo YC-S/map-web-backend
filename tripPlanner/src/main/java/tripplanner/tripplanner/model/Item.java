@@ -1,4 +1,5 @@
 package tripplanner.tripplanner.model;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
@@ -16,11 +17,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.stereotype.Indexed;
+
+//import org.hibernate.search.annotations.Field;
+//import org.hibernate.search.annotations.Indexed;
 
 @Indexed
 @Entity
@@ -35,7 +38,6 @@ public class Item implements Serializable {
     @Column (name = "yelp_id")
     private String id;
     private String alias;
-    @Field
     private String name;
     private String price;
     private String image_url;
