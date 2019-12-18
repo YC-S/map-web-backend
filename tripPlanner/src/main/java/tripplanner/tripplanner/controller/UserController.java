@@ -1,8 +1,10 @@
 package tripplanner.tripplanner.controller;
 
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,14 +24,14 @@ public class UserController {
 
   //  @Autowired private UserService userService;
 
-//  @PostMapping("/users/login")
-//  public ResponseEntity<?> validateLogin(@RequestBody User user, BindingResult bindingResult) {
-//    if (bindingResult.hasErrors()) {
-//      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//    } else {
-//      return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//  }
+  @PostMapping("/users/login")
+  public ResponseEntity<?> validateLogin(@RequestBody User user, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    } else {
+      return new ResponseEntity<>(HttpStatus.OK);
+    }
+  }
 
   //  @RequestMapping(value = "/users/search", method = RequestMethod.GET)
   //  public String search(@RequestBody User user) {
@@ -44,6 +46,13 @@ public class UserController {
   //    }
   //    return searchResults.toString();
   //  }
+
+
+  @PostMapping("/users/logout")
+  public ResponseEntity<?> logout(HttpSession session) {
+    session.invalidate();
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
 
   @PostMapping("/users/register")
   public ResponseEntity<?> registerUser(@RequestBody User user) {

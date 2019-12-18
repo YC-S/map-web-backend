@@ -1,31 +1,15 @@
 package tripplanner.tripplanner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.stereotype.Indexed;
 
-//import org.hibernate.search.annotations.Field;
-//import org.hibernate.search.annotations.Indexed;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
 
-@Indexed
 @Entity
 @Table(name = "item")
 @EntityListeners(AuditingEntityListener.class)
@@ -66,9 +50,9 @@ public class Item implements Serializable {
 
     @ManyToMany (cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable (
-        name = "item_category",
-        joinColumns = @JoinColumn(name ="item_id"),
-        inverseJoinColumns = @JoinColumn (name = "category_id"))
+      name = "item_category",
+      joinColumns = @JoinColumn(name ="item_id"),
+      inverseJoinColumns = @JoinColumn (name = "category_id"))
     private Set<Category> categories;
 
 
@@ -117,14 +101,14 @@ public class Item implements Serializable {
     }
 
     public boolean isIs_closed() {
-		return is_closed;
-	}
+        return is_closed;
+    }
 
-	public void setIs_closed(boolean is_closed) {
-		this.is_closed = is_closed;
-	}
+    public void setIs_closed(boolean is_closed) {
+        this.is_closed = is_closed;
+    }
 
-	public String getUrl() {
+    public String getUrl() {
         return url;
     }
 
@@ -212,25 +196,25 @@ public class Item implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    @Override
-    public String toString() {
-        return "Item{" +
-                "id='" + id + '\'' +
-                ", alias='" + alias + '\'' +
-                ", name='" + name + '\'' +
-                ", price='" + price + '\'' +
-                ", image_url='" + image_url + '\'' +
-                ", is_closed=" + is_closed +
-                ", url='" + url + '\'' +
-                ", review_count=" + review_count +
-                ", rating=" + rating +
-                ", phone='" + phone + '\'' +
-                ", display_phone='" + display_phone + '\'' +
-                ", distance=" + distance +
-                ", coordinates=" + coordinates +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", categories=" + categories +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Item{" +
+//          "id='" + id + '\'' +
+//          ", alias='" + alias + '\'' +
+//          ", name='" + name + '\'' +
+//          ", price='" + price + '\'' +
+//          ", image_url='" + image_url + '\'' +
+//          ", is_closed=" + is_closed +
+//          ", url='" + url + '\'' +
+//          ", review_count=" + review_count +
+//          ", rating=" + rating +
+//          ", phone='" + phone + '\'' +
+//          ", display_phone='" + display_phone + '\'' +
+//          ", distance=" + distance +
+//          ", coordinates=" + coordinates +
+//          ", createdAt=" + createdAt +
+//          ", updatedAt=" + updatedAt +
+//          ", categories=" + categories +
+//          '}';
+//    }
 }
