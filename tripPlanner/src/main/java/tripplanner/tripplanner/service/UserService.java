@@ -6,10 +6,14 @@ public interface UserService {
 
     void addUser(User user);
 
+    void addUser();
+
     void deleteUser(int userID);
 
     void updateUser(int userID, User user);
 
     User getUserByUserName(int userID);
+
+//    boolean findUser(User user);
 
 }

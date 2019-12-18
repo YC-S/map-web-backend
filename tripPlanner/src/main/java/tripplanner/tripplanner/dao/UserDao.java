@@ -1,15 +1,11 @@
 package tripplanner.tripplanner.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import tripplanner.tripplanner.model.User;
 
-public interface UserDao {
+@Repository
+public interface UserDao extends JpaRepository<User, String> {
 
-    void addUser(User user);
-
-    void deleteUser(int userID);
-
-    void updateUser(int userID, User user);
-
-    User getUserByUserName(int userID);
 
 }
