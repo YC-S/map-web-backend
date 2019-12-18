@@ -64,7 +64,7 @@ public class Item implements Serializable {
 //    @ManyToMany(cascade = {CascadeType.PERSIST})
 //    private List<Category> categories;
 
-    @ManyToMany (cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToMany (cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable (
         name = "item_category",
         joinColumns = @JoinColumn(name ="item_id"),
@@ -117,14 +117,14 @@ public class Item implements Serializable {
     }
 
     public boolean isIs_closed() {
-        return is_closed;
-    }
+		return is_closed;
+	}
 
-    public void setIs_closed(boolean is_closed) {
-        this.is_closed = is_closed;
-    }
+	public void setIs_closed(boolean is_closed) {
+		this.is_closed = is_closed;
+	}
 
-    public String getUrl() {
+	public String getUrl() {
         return url;
     }
 
@@ -212,25 +212,25 @@ public class Item implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Item{" +
-//                "id='" + id + '\'' +
-//                ", alias='" + alias + '\'' +
-//                ", name='" + name + '\'' +
-//                ", price='" + price + '\'' +
-//                ", image_url='" + image_url + '\'' +
-//                ", is_closed=" + is_closed +
-//                ", url='" + url + '\'' +
-//                ", review_count=" + review_count +
-//                ", rating=" + rating +
-//                ", phone='" + phone + '\'' +
-//                ", display_phone='" + display_phone + '\'' +
-//                ", distance=" + distance +
-//                ", coordinates=" + coordinates +
-//                ", createdAt=" + createdAt +
-//                ", updatedAt=" + updatedAt +
-//                ", categories=" + categories +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id='" + id + '\'' +
+                ", alias='" + alias + '\'' +
+                ", name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                ", image_url='" + image_url + '\'' +
+                ", is_closed=" + is_closed +
+                ", url='" + url + '\'' +
+                ", review_count=" + review_count +
+                ", rating=" + rating +
+                ", phone='" + phone + '\'' +
+                ", display_phone='" + display_phone + '\'' +
+                ", distance=" + distance +
+                ", coordinates=" + coordinates +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", categories=" + categories +
+                '}';
+    }
 }

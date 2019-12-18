@@ -99,5 +99,6 @@ public class Profile {
 	public void setPrivacy(boolean privacy) {
 		this.privacy = privacy;
 	}
+
 	
 }

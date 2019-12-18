@@ -3,16 +3,20 @@ package tripplanner.tripplanner.controller;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import tripplanner.tripplanner.model.Profile;
 import tripplanner.tripplanner.service.ProfileService;
 
@@ -27,6 +31,7 @@ public class ProfileController {
 	ServletContext context;
 	
 	// Need to change this folder path to your own local path
+
 	String folder = "/Users/shiyuanchen/Desktop/profile_images/";
 	
 	@GetMapping("/profile/{profileId}")
@@ -65,6 +70,7 @@ public class ProfileController {
 		try {
 			saveProfileImage(file, profile.getId());
 		} catch (Exception e) {
+
 			System.out.println("addProfile failure!");
 			e.printStackTrace();
 		}
