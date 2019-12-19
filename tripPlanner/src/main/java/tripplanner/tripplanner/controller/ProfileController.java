@@ -1,23 +1,32 @@
 package tripplanner.tripplanner.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import tripplanner.tripplanner.dao.UserDao;
+import tripplanner.tripplanner.model.Item;
 import tripplanner.tripplanner.model.Profile;
+import tripplanner.tripplanner.model.User;
 import tripplanner.tripplanner.service.ProfileService;
 
 @RestController
@@ -30,6 +39,9 @@ public class ProfileController {
 	@Autowired
 	ServletContext context;
 	
+	@Autowired
+	private UserDao userDao;
+	
 	// Need to change this folder path to your own local path
 
 	String folder = "/Users/dengyang/eclipse-workspace/profile_images";
@@ -41,6 +53,23 @@ public class ProfileController {
 			throw new RuntimeException("Profile id not found - " + profileId);
 		}
 		return myProfile;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/profileImage/{userId}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	public byte[] getProfileImage(@PathVariable String userId) throws IOException {
+		// find the user by userId
+		Optional<User> result = userDao.findById(userId);
+		User theUser = null;
+		if(result.isPresent()) {
+			theUser = result.get();
+			Profile theProfile = theUser.getCores_profile();
+			String profileId = theProfile.getId();
+		    InputStream in = context.getResourceAsStream(folder + profileId + ".jpg");
+		    return IOUtils.toByteArray(in);
+		} else {
+			throw new RuntimeException("Did not find user id - " + userId);
+		}
 	}
 	
 	@DeleteMapping("/profile/{profileId}")
