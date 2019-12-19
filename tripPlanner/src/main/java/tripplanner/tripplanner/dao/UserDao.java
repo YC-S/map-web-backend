@@ -5,7 +5,4 @@ import org.springframework.stereotype.Repository;
 import tripplanner.tripplanner.model.User;
 
 @Repository
-public interface UserDao extends JpaRepository<User, String> {
-
-
-}
+public interface UserDao extends JpaRepository<User, String> {}
