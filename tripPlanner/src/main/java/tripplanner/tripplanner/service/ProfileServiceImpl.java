@@ -15,19 +15,20 @@ public class ProfileServiceImpl implements ProfileService {
 
 	@Override
 	@Transactional
-	public void addOrUpdateProfile(Profile profile) {
+	public String addOrUpdateProfile(Profile profile) {
 		profileDao.addOrUpdateProfile(profile);
+		return profile.getId();
 	}
 
 	@Override
 	@Transactional
-	public void deleteProfileById(int profileId) {
+	public void deleteProfileById(String profileId) {
 		profileDao.deleteProfileById(profileId);
 	}
 
 	@Override
 	@Transactional
-	public Profile findProfileById(int profileId) {
+	public Profile findProfileById(String profileId) {
 		return profileDao.findProfileById(profileId);
 	}
 

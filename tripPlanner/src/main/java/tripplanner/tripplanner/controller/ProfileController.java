@@ -32,10 +32,10 @@ public class ProfileController {
 	
 	// Need to change this folder path to your own local path
 
-	String folder = "/Users/shiyuanchen/Desktop/profile_images/";
+	String folder = "/Users/dengyang/eclipse-workspace/profile_images";
 	
 	@GetMapping("/profile/{profileId}")
-	public Profile getProfileById(@PathVariable int profileId) {
+	public Profile getProfileById(@PathVariable String profileId) {
 		Profile myProfile = profileService.findProfileById(profileId);
 		if(myProfile == null) {
 			throw new RuntimeException("Profile id not found - " + profileId);
@@ -44,7 +44,7 @@ public class ProfileController {
 	}
 	
 	@DeleteMapping("/profile/{profileId}")
-	public String deleteProfile(@PathVariable int profileId) {
+	public String deleteProfile(@PathVariable String profileId) {
 		Profile myProfile = profileService.findProfileById(profileId);
 		if(myProfile == null) {
 			throw new RuntimeException("Profile id not found - " + profileId);
@@ -62,7 +62,7 @@ public class ProfileController {
 		return "Deleted employee id - " + profileId;
 	}
 	
-	@PostMapping("/addprofile")
+	@PostMapping("/saveProfile")
 	public void addProfile(@RequestPart("json") Profile profile, @RequestPart("file") MultipartFile file) {
 		// save profile into DB first
 		profileService.addOrUpdateProfile(profile);
@@ -79,7 +79,7 @@ public class ProfileController {
 	
 	/** This method is used to save profile image to server disk
 	 */
-	public void saveProfileImage(MultipartFile imageFile, int profileId) throws Exception {
+	public void saveProfileImage(MultipartFile imageFile, String profileId) throws Exception {
 		byte[] bytes = imageFile.getBytes();
 		Path path = Paths.get(folder + profileId + ".png");
 		Files.write(path, bytes);

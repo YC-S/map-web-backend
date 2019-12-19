@@ -4,13 +4,12 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Indexed;
-//import org.hibernate.search.annotations.Field;
-//import org.hibernate.search.annotations.Indexed;
 
 @Indexed
 @Entity
@@ -20,21 +19,21 @@ public class User implements Serializable {
   private static final long serialVersionUID = -3427787029195454928L;
 
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Id @GeneratedValue(generator="system-uuid")
+  @GenericGenerator(name="system-uuid", strategy = "uuid")
   @Column (name = "id")
-  private int userId;
+  private String userId;
   private String username;
   private String email;
   private String password;
 
   @OneToOne private Profile cores_profile;
 
-  public int getId() {
+  public String getId() {
     return userId;
   }
 
-  public void setId(int userId) {
+  public void setId(String userId) {
     this.userId = userId;
   }
 

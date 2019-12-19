@@ -30,7 +30,7 @@ public class ProfileDaoImpl implements ProfileDao {
 	}
 
 	@Override
-	public void deleteProfileById(int profileId) {
+	public void deleteProfileById(String profileId) {
 		Session currentSession = entityManager.unwrap(Session.class);
 		Profile profile = findProfileById(profileId);
 		
@@ -38,7 +38,7 @@ public class ProfileDaoImpl implements ProfileDao {
 	}
 
 	@Override
-	public Profile findProfileById(int profileId) {
+	public Profile findProfileById(String profileId) {
 		Session currentSession = entityManager.unwrap(Session.class);
 		
 		Profile profile = currentSession.get(Profile.class, profileId);
