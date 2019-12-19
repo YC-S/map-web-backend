@@ -6,10 +6,10 @@ public interface UserService {
 
     void addUser(User user);
 
-    void deleteUser(int userID);
+    void deleteUser(String userID);
 
-    void updateUser(int userID, User user);
+    void updateUser(User user);
 
-    User getUserByUserName(int userID);
+    User getUserByUserId(String userId);
 
 }

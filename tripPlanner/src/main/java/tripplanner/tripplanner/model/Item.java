@@ -1,5 +1,6 @@
 package tripplanner.tripplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -59,6 +60,10 @@ public class Item implements Serializable {
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn (name = "location_id")
     private Location location;
+    
+    @ManyToOne
+    @JsonIgnore
+    private Plan plan;
 
     public String getId() {
         return id;
