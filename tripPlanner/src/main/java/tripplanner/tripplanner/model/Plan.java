@@ -34,7 +34,7 @@ public class Plan implements Serializable {
 	
 	private String city;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinTable (
 		        name = "plan_item",
 		        joinColumns = @JoinColumn(name ="plan_id"),
