@@ -9,8 +9,12 @@ import java.util.Optional;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import tripplanner.tripplanner.dao.UserDao;
-import tripplanner.tripplanner.model.Item;
 import tripplanner.tripplanner.model.Profile;
 import tripplanner.tripplanner.model.User;
 import tripplanner.tripplanner.service.ProfileService;
@@ -37,14 +40,13 @@ public class ProfileController {
 	private ProfileService profileService;
 	
 	@Autowired
-	ServletContext context;
+	private ServletContext context;
 	
 	@Autowired
 	private UserDao userDao;
 	
-	// Need to change this folder path to your own local path
-
-	String folder = "/Users/dengyang/eclipse-workspace/profile_images";
+//	String folder = "/Users/dengyang/eclipse-workspace/map-web-backend/tripPlanner/src/main/resources/";
+	String folder = "./src/main/resources/";
 	
 	@GetMapping("/profile/{profileId}")
 	public Profile getProfileById(@PathVariable String profileId) {
@@ -55,21 +57,15 @@ public class ProfileController {
 		return myProfile;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/profileImage/{userId}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-	public byte[] getProfileImage(@PathVariable String userId) throws IOException {
-		// find the user by userId
-		Optional<User> result = userDao.findById(userId);
-		User theUser = null;
-		if(result.isPresent()) {
-			theUser = result.get();
-			Profile theProfile = theUser.getCores_profile();
-			String profileId = theProfile.getId();
-		    InputStream in = context.getResourceAsStream(folder + profileId + ".jpg");
-		    return IOUtils.toByteArray(in);
-		} else {
-			throw new RuntimeException("Did not find user id - " + userId);
-		}
+	// Hit endpoint: localhost:8080/api/profileImage/402881ae6f201328016f201e234d0003
+	// 402881ae6f201328016f201e234d0003 is profileId
+	@GetMapping(value="/profileImage/{profileId}", produces=MediaType.IMAGE_JPEG_VALUE)
+	public @ResponseBody byte[] getProfileImage(@PathVariable String profileId) throws IOException {
+		InputStream in = ProfileController.class.getClassLoader().getResourceAsStream(profileId + ".png");
+		if(in == null) {
+			System.exit(0); 
+		} 
+		return IOUtils.toByteArray(in);
 	}
 	
 	@DeleteMapping("/profile/{profileId}")
@@ -93,13 +89,12 @@ public class ProfileController {
 	
 	@PostMapping("/saveProfile")
 	public void addProfile(@RequestPart("json") Profile profile, @RequestPart("file") MultipartFile file) {
-		// save profile into DB first
-		profileService.addOrUpdateProfile(profile);
-		// save profile image to disk
 		try {
-			saveProfileImage(file, profile.getId());
+			// save profile into DB first
+			String profileId = profileService.addOrUpdateProfile(profile);
+			// save profile image to disk
+			saveProfileImage(file, profileId);
 		} catch (Exception e) {
-
 			System.out.println("addProfile failure!");
 			e.printStackTrace();
 		}

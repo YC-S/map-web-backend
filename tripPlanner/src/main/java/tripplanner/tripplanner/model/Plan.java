@@ -42,7 +42,6 @@ public class Plan implements Serializable {
 	private Set<Item> planItems;
 	
 	@ManyToOne
-	@JsonIgnore
 	private User user;
 
 	public User getUser() {
