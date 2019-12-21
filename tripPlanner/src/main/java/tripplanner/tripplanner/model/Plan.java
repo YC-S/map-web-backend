@@ -1,10 +1,13 @@
 package tripplanner.tripplanner.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,18 +34,29 @@ public class Plan implements Serializable {
 	
 	@Column(name="plan_title")
 	private String planTitle;
-	
 	private String city;
 	
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-	@JoinTable (
-		        name = "plan_item",
-		        joinColumns = @JoinColumn(name ="plan_id"),
-		        inverseJoinColumns = @JoinColumn (name = "item_id"))
-	private Set<Item> planItems;
+//	@JoinTable (
+//		        name = "plan_item",
+//		        joinColumns = @JoinColumn(name ="plan_id"),
+//		        inverseJoinColumns = @JoinColumn (name = "item_id"))
+//	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+//	@JoinColumn(name = "plan_id") // create a column in Table Item with column name "plan_id"
+	@Column(name="plan_items")
+	private String planItems;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
 	private User user;
+	
+
+	public String getPlanItems() {
+		return planItems;
+	}
+
+	public void setPlanItems(String planItems) {
+		this.planItems = planItems;
+	}
 
 	public User getUser() {
 		return user;
@@ -75,12 +89,4 @@ public class Plan implements Serializable {
 	public void setCity(String city) {
 		this.city = city;
 	}
-
-	public Set<Item> getPlanItems() {
-		return planItems;
-	}
-
-	public void setPlanItems(Set<Item> planItems) {
-		this.planItems = planItems;
-	}	
 }

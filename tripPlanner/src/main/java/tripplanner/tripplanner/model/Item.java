@@ -59,8 +59,19 @@ public class Item implements Serializable {
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn (name = "location_id")
     private Location location;
+    
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    private Plan plan;
 
-    public String getId() {
+//    public Plan getPlan() {
+//		return plan;
+//	}
+//
+//	public void setPlan(Plan plan) {
+//		this.plan = plan;
+//	}
+
+	public String getId() {
         return id;
     }
 
