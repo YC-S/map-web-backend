@@ -1,6 +1,7 @@
 package tripplanner.tripplanner.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -43,17 +44,78 @@ public class PlanController {
 		public void addItemToPlan(@PathVariable("planId") String planId, @PathVariable("itemId") String itemId) {
 			Plan curPlan = planService.getPlanById(planId);
 			String curPlanItems = curPlan.getPlanItems();
+			Set<String> set = new HashSet<>();
+			if(curPlanItems != null) {
+				String[] items = curPlanItems.split(",");
+				for(String item : items) {
+					set.add(item);
+				}
+			}
 			logger.info("item id = " + itemId);
 			
 			logger.info("curPlanItems = " + curPlanItems);
 			if(curPlanItems == null) {
 				curPlanItems = "" + itemId;
-			} else {
+			} else if(!set.contains(itemId)) {
 				curPlanItems = curPlanItems + "," + itemId;
+			} else {
+				throw new RuntimeException("This item is already in this plan - " + itemId);
 			}
 			
 			logger.info("curPlanItems after = " + curPlanItems);
 			curPlan.setPlanItems(curPlanItems);
+			planDao.save(curPlan);
+		}
+		
+		@DeleteMapping("/deleteItem/{planId}/{itemId}")
+		public void deleteItemFromPlan(@PathVariable("planId") String planId, @PathVariable("itemId") String itemId) {
+			Plan curPlan = planService.getPlanById(planId);
+			String curPlanItems = curPlan.getPlanItems();
+			if(curPlanItems == null) {
+				throw new RuntimeException("There is no item in this Plan - " + planId);
+			}
+			String[] itemIds = curPlanItems.split(",");
+			
+			// find the index of the to-be-deleted itemId
+			int deletedItemIndex = -1;
+			for(int i = 0; i < itemIds.length; i++) {
+				if(itemIds[i].equals(itemId)) {
+					deletedItemIndex = i;
+					break;
+				}
+			}
+			
+			if(deletedItemIndex == -1) {
+				throw new RuntimeException("This item is not existing in this Plan - " + itemId);
+			}
+			
+			logger.info("deletedItemIndex = " + deletedItemIndex);
+			
+			// delete the itemId on certain index
+			String[] deletedPlanItems = new String[itemIds.length - 1];
+			for(int i = 0, k = 0; i < itemIds.length; i++) {
+				if(i == deletedItemIndex) {
+					continue;
+				}
+				deletedPlanItems[k++] = itemIds[i];
+			}
+			
+			// change a String of itemIds into one String
+			String newItemIds = "";
+			if(deletedPlanItems.length == 0) {
+				curPlan.setPlanItems(null);
+			} else {
+				for(String itemid : deletedPlanItems) {
+					if(newItemIds.length() == 0) {
+						newItemIds = itemid;
+					} else {
+						newItemIds = newItemIds +  "," + itemid;
+					}
+					logger.info("newItemIds = " + newItemIds);
+				}
+			}
+			
+			curPlan.setPlanItems(newItemIds);
 			planDao.save(curPlan);
 		}
 		
@@ -79,7 +141,7 @@ public class PlanController {
 	    }
 	    
 	    @PutMapping("/addPlan")
-	    public void updateItem(Plan plan) {
+	    public void updateItem(@RequestBody Plan plan) {
 	    	planService.createNewPlan(plan);
 	    }
 	    
