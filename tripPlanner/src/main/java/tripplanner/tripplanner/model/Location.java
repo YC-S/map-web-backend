@@ -1,6 +1,8 @@
 package tripplanner.tripplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.search.annotations.Field;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,15 +17,18 @@ public class Location implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
+    @Field
     private String address1;
     private String address2;
     private String address3;
     private String city;
+    @Field
     private String zip_code;
     private String country;
     private String state;
 
     @OneToOne (mappedBy = "location")
+    @JsonBackReference
     private Item item;
 
     public Long getId() {

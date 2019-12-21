@@ -1,6 +1,9 @@
 package tripplanner.tripplanner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,6 +14,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
+@Indexed
 @Table(name = "item")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,6 +26,7 @@ public class Item implements Serializable {
     @Column (name = "yelp_id")
     private String id;
     private String alias;
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String name;
     private String price;
     private String image_url;
@@ -44,34 +49,22 @@ public class Item implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
-
-//    @ManyToMany(cascade = {CascadeType.PERSIST})
-//    private List<Category> categories;
-
-    @ManyToMany (cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @IndexedEmbedded
+    @ManyToMany (cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JsonManagedReference
     @JoinTable (
-      name = "item_category",
-      joinColumns = @JoinColumn(name ="item_id"),
-      inverseJoinColumns = @JoinColumn (name = "category_id"))
+        name = "item_category",
+        joinColumns = @JoinColumn(name ="item_id"),
+        inverseJoinColumns = @JoinColumn (name = "category_id"))
     private Set<Category> categories;
 
-
+    @IndexedEmbedded
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JsonManagedReference
     @JoinColumn (name = "location_id")
     private Location location;
-    
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    private Plan plan;
 
-//    public Plan getPlan() {
-//		return plan;
-//	}
-//
-//	public void setPlan(Plan plan) {
-//		this.plan = plan;
-//	}
-
-	public String getId() {
+    public String getId() {
         return id;
     }
 
@@ -210,22 +203,22 @@ public class Item implements Serializable {
 //    @Override
 //    public String toString() {
 //        return "Item{" +
-//          "id='" + id + '\'' +
-//          ", alias='" + alias + '\'' +
-//          ", name='" + name + '\'' +
-//          ", price='" + price + '\'' +
-//          ", image_url='" + image_url + '\'' +
-//          ", is_closed=" + is_closed +
-//          ", url='" + url + '\'' +
-//          ", review_count=" + review_count +
-//          ", rating=" + rating +
-//          ", phone='" + phone + '\'' +
-//          ", display_phone='" + display_phone + '\'' +
-//          ", distance=" + distance +
-//          ", coordinates=" + coordinates +
-//          ", createdAt=" + createdAt +
-//          ", updatedAt=" + updatedAt +
-//          ", categories=" + categories +
-//          '}';
+//                "id='" + id + '\'' +
+//                ", alias='" + alias + '\'' +
+//                ", name='" + name + '\'' +
+//                ", price='" + price + '\'' +
+//                ", image_url='" + image_url + '\'' +
+//                ", is_closed=" + is_closed +
+//                ", url='" + url + '\'' +
+//                ", review_count=" + review_count +
+//                ", rating=" + rating +
+//                ", phone='" + phone + '\'' +
+//                ", display_phone='" + display_phone + '\'' +
+//                ", distance=" + distance +
+//                ", coordinates=" + coordinates +
+//                ", createdAt=" + createdAt +
+//                ", updatedAt=" + updatedAt +
+//                ", categories=" + categories +
+//                '}';
 //    }
 }

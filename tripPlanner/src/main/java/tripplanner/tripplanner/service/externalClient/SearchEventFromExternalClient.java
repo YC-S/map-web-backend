@@ -1,4 +1,4 @@
-package tripplanner.tripplanner.externalClient;
+package tripplanner.tripplanner.service.externalClient;
 
 import org.json.JSONException;
 import tripplanner.tripplanner.model.Item;
