@@ -1,6 +1,9 @@
 package tripplanner.tripplanner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,6 +14,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
+@Indexed
 @Table(name = "item")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,6 +26,7 @@ public class Item implements Serializable {
     @Column (name = "yelp_id")
     private String id;
     private String alias;
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String name;
     private String price;
     private String image_url;
@@ -44,19 +49,18 @@ public class Item implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
-
-//    @ManyToMany(cascade = {CascadeType.PERSIST})
-//    private List<Category> categories;
-
+    @IndexedEmbedded
     @ManyToMany (cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JsonManagedReference
     @JoinTable (
         name = "item_category",
         joinColumns = @JoinColumn(name ="item_id"),
         inverseJoinColumns = @JoinColumn (name = "category_id"))
     private Set<Category> categories;
 
-
+    @IndexedEmbedded
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JsonManagedReference
     @JoinColumn (name = "location_id")
     private Location location;
 

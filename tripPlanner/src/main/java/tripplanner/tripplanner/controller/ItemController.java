@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tripplanner.tripplanner.dao.ItemDao;
-import tripplanner.tripplanner.externalClient.SearchEventFromYelp;
+import tripplanner.tripplanner.service.externalClient.SearchEventFromYelp;
 import tripplanner.tripplanner.model.Item;
 
 @RestController
