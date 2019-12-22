@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import tripplanner.tripplanner.dao.UserDao;
 import tripplanner.tripplanner.model.Profile;
 import tripplanner.tripplanner.model.User;
-// import tripplanner.tripplanner.service.HibernateSearchService;
 import tripplanner.tripplanner.service.ProfileService;
+import tripplanner.tripplanner.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -21,6 +22,9 @@ public class UserController {
 
   @Autowired
   private UserDao userDao;
+
+  @Autowired
+  private UserService userService;
   
   @Autowired
   private ProfileService profileService;
@@ -30,11 +34,13 @@ public class UserController {
   //  @Autowired private UserService userService;
 
   @PostMapping("/users/login")
-  public ResponseEntity<?> validateLogin(@RequestBody User user, BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    } else {
+  public ResponseEntity<?> validateLogin(@RequestBody User user) {
+    User userInRepo = userService.findUserByUsername(user.getUsername());
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    if (encoder.matches(user.getPassword(), userInRepo.getPassword())) {
       return new ResponseEntity<>(HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -46,24 +52,15 @@ public class UserController {
 
   @PostMapping("/users/register")
   public String registerUser(@RequestBody User user) {
-    userDao.save(user);
-    Profile profile = new Profile();
-    String profileId = profileService.addOrUpdateProfile(profile);
-    // return profileId, so frontend can redirect to profile page using profileId
-    return "corresponding profile id is " + profileId;
+    User userExists = userService.findUserByEmail(user.getEmail());
+    if (userExists != null) {
+      return "\"There is already a user registered with the email provided";
+    } else {
+      userService.saveUser(user);
+      Profile profile = new Profile();
+      String profileId = profileService.addOrUpdateProfile(profile);
+      // return profileId, so frontend can redirect to profile page using profileId
+      return "registration success. corresponding profile id is " + profileId;
+    }
   }
-  
-//@RequestMapping(value = "/users/search", method = RequestMethod.GET)
-//  public String search(@RequestBody User user) {
-//    List<User> searchResults = null;
-//    try {
-////      userService.addUser(user);
-//      searchResults = searchService.fuzzySearch(user.getUserName());
-//    } catch (Exception ex) {
-//      // here you should handle unexpected errors
-//      // ...
-//      // throw ex;
-//    }
-//    return searchResults.toString();
-//  }
 }

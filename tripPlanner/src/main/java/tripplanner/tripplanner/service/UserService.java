@@ -1,17 +1,43 @@
-//package tripplanner.tripplanner.service;
-//
-//import tripplanner.tripplanner.model.User;
-//
-//public interface UserService {
-//
-//    void addUser(User user);
-//
-//    void deleteUser(int userID);
-//
-//    void updateUser(int userID, User user);
-//
-//    User getUserByUserName(int userID);
-//
-////    boolean findUser(User user);
-//
-//}
+package tripplanner.tripplanner.service;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import tripplanner.tripplanner.dao.RoleDao;
+import tripplanner.tripplanner.dao.UserDao;
+import tripplanner.tripplanner.model.Role;
+import tripplanner.tripplanner.model.User;
+
+@Service("userService")
+public class UserService {
+
+  private UserDao userDao;
+  private RoleDao roleDao;
+  private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+  @Autowired
+  public UserService(
+      UserDao userDao, RoleDao roleDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    this.userDao = userDao;
+    this.roleDao = roleDao;
+    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+  }
+
+  public User findUserByEmail(String email) {
+    return userDao.findByEmail(email);
+  }
+
+  public User findUserByUsername(String username) {
+    return userDao.findByUsername(username);
+  }
+
+  public User saveUser(User user) {
+    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    user.setActive(1);
+    Role userRole = roleDao.findByRole("ADMIN");
+    user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+    return userDao.save(user);
+  }
+}
