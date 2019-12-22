@@ -51,7 +51,6 @@ public class Item implements Serializable {
 
     @IndexedEmbedded
     @ManyToMany (cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @JsonManagedReference
     @JoinTable (
         name = "item_category",
         joinColumns = @JoinColumn(name ="item_id"),
@@ -60,7 +59,6 @@ public class Item implements Serializable {
 
     @IndexedEmbedded
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    @JsonManagedReference
     @JoinColumn (name = "location_id")
     private Location location;
 
