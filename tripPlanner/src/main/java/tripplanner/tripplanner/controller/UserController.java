@@ -51,16 +51,16 @@ public class UserController {
   }
 
   @PostMapping("/users/register")
-  public String registerUser(@RequestBody User user) {
+  public ResponseEntity<?>  registerUser(@RequestBody User user) {
     User userExists = userService.findUserByEmail(user.getEmail());
     if (userExists != null) {
-      return "\"There is already a user registered with the email provided";
+      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     } else {
       userService.saveUser(user);
       Profile profile = new Profile();
       String profileId = profileService.addOrUpdateProfile(profile);
       // return profileId, so frontend can redirect to profile page using profileId
-      return "registration success. corresponding profile id is " + profileId;
+      return new ResponseEntity<>(HttpStatus.OK);
     }
   }
 }
