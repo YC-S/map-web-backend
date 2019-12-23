@@ -6,4 +6,4 @@ import org.springframework.stereotype.Repository;
 import tripplanner.tripplanner.model.Item;
 
 @Repository
-public interface ItemDao extends CrudRepository<Item, String> { }
+public interface ItemDao extends JpaRepository<Item, String> { }
