@@ -1,6 +1,7 @@
 package tripplanner.tripplanner.controller;
 
 import javax.servlet.http.HttpSession;
+import jdk.nashorn.internal.objects.NativeJSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +35,13 @@ public class UserController {
   //  @Autowired private UserService userService;
 
   @PostMapping("/users/login")
-  public ResponseEntity<?> validateLogin(@RequestBody User user) {
+  public User validateLogin(@RequestBody User user) {
     User userInRepo = userService.findUserByUsername(user.getUsername());
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     if (encoder.matches(user.getPassword(), userInRepo.getPassword())) {
-      return new ResponseEntity<>(HttpStatus.OK);
+      return userInRepo;
     } else {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+      return null;
     }
   }
 
