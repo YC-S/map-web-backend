@@ -2,11 +2,14 @@ package tripplanner.tripplanner.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tripplanner.tripplanner.dao.RoleDao;
 import tripplanner.tripplanner.dao.UserDao;
+import tripplanner.tripplanner.model.Item;
 import tripplanner.tripplanner.model.Role;
 import tripplanner.tripplanner.model.User;
 
@@ -37,5 +40,16 @@ public class UserService {
     user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
     Role userRole = roleDao.findByRole("ADMIN");
     return userDao.save(user);
+  }
+  
+  public User findUserById(String userId) {
+	  Optional<User> result = userDao.findById(userId);
+		User theUser = null;
+		if(result.isPresent()) {
+			theUser = result.get();
+		} else {
+			throw new RuntimeException("Did not find user id - " + userId);
+		}
+		return theUser;
   }
 }
