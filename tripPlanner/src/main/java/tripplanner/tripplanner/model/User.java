@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -40,7 +41,8 @@ public class User implements Serializable {
   private String email;
   private String password;
 
-  @OneToOne private Profile cores_profile;
+  @OneToOne(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+  private Profile cores_profile;
   
 
   public String getId() {
