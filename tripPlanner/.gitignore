@@ -68,3 +68,5 @@ hs_err_pid*
 ehthumbs.db
 Thumbs.db
 /bin/
+
+tripPlanner/tripplanner.tripplanner.model.Item

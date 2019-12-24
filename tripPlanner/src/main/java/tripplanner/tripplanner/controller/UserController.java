@@ -57,8 +57,9 @@ public class UserController {
     if (userExists != null) {
       throw new Exception("there is already a user exist");
     } else {
-      userService.saveUser(user);
       Profile profile = new Profile();
+      user.setCores_profile(profile);
+      userService.saveUser(user);
       String profileId = profileService.addOrUpdateProfile(profile);
       // return profileId, so frontend can redirect to profile page using profileId
       return user;
