@@ -32,8 +32,8 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public void createNewPlan(Plan plan) {
-		planDao.saveAndFlush(plan);
+	public Plan createNewPlan(Plan plan) {
+		return planDao.saveAndFlush(plan);
 	}
 
 }

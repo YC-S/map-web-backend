@@ -136,8 +136,8 @@ public class PlanController {
 		}
 	
 	 	@PostMapping("/addPlan")
-	    public void addPlan(@RequestBody Plan plan) {
-		 	planService.createNewPlan(plan);
+	    public Plan addPlan(@RequestBody Plan plan) {
+		 	return planService.createNewPlan(plan);
 	    }
 	    
 	    @PutMapping("/addPlan")

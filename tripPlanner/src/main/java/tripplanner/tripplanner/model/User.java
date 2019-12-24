@@ -41,6 +41,7 @@ public class User implements Serializable {
   private String password;
 
   @OneToOne private Profile cores_profile;
+  
 
   public String getId() {
     return userId;
