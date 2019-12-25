@@ -2,6 +2,7 @@ package tripplanner.tripplanner.controller;
 
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import tripplanner.tripplanner.service.externalClient.SearchDescriptionFromWiki;
 import tripplanner.tripplanner.service.externalClient.SearchEventFromYelp;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class ItemController {
 
   @Autowired private SearchEventFromYelp searchEventFromYelp;
