@@ -60,7 +60,7 @@ public class UserController {
       Profile profile = new Profile();
       user.setCores_profile(profile);
       userService.saveUser(user);
-      String profileId = profileService.addOrUpdateProfile(profile);
+      //String profileId = profileService.addOrUpdateProfile(profile);
       // return profileId, so frontend can redirect to profile page using profileId
       return user;
     }

@@ -29,8 +29,8 @@ public class Profile {
 	@Column(name="last_name")
 	private String lastName;
 	
-	@OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-	@JoinColumn(name = "userId", referencedColumnName="id")
+	@OneToOne
+	@JoinColumn(name="userId")
 	private User cores_user;
 	
 	@Column(name="description")
