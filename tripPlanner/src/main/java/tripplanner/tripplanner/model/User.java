@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Indexed;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -40,6 +42,7 @@ public class User implements Serializable {
 
   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinColumn(name="profile_id")
+  @JsonBackReference
   private Profile cores_profile;
   
 
