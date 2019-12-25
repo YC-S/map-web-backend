@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="plan")
@@ -45,8 +46,11 @@ public class Plan implements Serializable {
 	@Column(name="plan_items")
 	private String planItems;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, 
+			CascadeType.DETACH, CascadeType.REFRESH}, 
+			fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
+	@JsonManagedReference
 	private User user;
 	
 

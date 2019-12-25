@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 import tripplanner.tripplanner.dao.PlanDao;
 import tripplanner.tripplanner.model.Item;
 import tripplanner.tripplanner.model.Plan;
+import tripplanner.tripplanner.model.User;
 import tripplanner.tripplanner.service.ItemService;
 import tripplanner.tripplanner.service.PlanService;
+import tripplanner.tripplanner.service.UserService;
 
 @RestController
 @RequestMapping("/api")
@@ -37,6 +39,9 @@ public class PlanController {
 	
 	@Autowired
 	private ItemService itemService;
+	
+	@Autowired
+	private UserService userService;
 	
 	final static Logger logger = LoggerFactory.getLogger(PlanController.class);
 	
@@ -135,8 +140,10 @@ public class PlanController {
 			return items;
 		}
 	
-	 	@PostMapping("/addPlan")
-	    public Plan addPlan(@RequestBody Plan plan) {
+	 	@PostMapping("/addPlan/{userId}")
+	    public Plan addPlan(@RequestBody Plan plan, @PathVariable String userId) {
+	 		User curUser = userService.findUserById(userId);
+	 		curUser.add(plan);
 		 	return planService.createNewPlan(plan);
 	    }
 	    
