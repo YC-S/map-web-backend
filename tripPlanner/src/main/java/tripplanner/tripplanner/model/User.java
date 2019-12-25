@@ -52,6 +52,7 @@ public class User implements Serializable {
   @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JsonBackReference
   private List<Plan> plans; 
+
   
   public void add(Plan plan) {
 	  if(plans == null) {

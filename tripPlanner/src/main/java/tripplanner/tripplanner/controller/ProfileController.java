@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -99,6 +100,19 @@ public class ProfileController {
 			e.printStackTrace();
 		}
 	}
+
+	@PutMapping("/updateProfile")
+	public void updateProfile(@RequestPart("json") Profile profile, @RequestPart("file") MultipartFile file) {
+		try {
+			// save profile into DB first
+			String profileId = profileService.addOrUpdateProfile(profile);
+			// save profile image to disk
+			saveProfileImage(file, profileId);
+		} catch (Exception e) {
+			System.out.println("updateProfile failure!");
+			e.printStackTrace();
+		}
+	}
 	
 	
 	/** This method is used to save profile image to server disk
@@ -108,5 +122,7 @@ public class ProfileController {
 		Path path = Paths.get(folder + profileId + ".png");
 		Files.write(path, bytes);
 	}
+
+
 
 }
