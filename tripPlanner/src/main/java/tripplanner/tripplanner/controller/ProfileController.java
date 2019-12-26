@@ -66,7 +66,7 @@ public class ProfileController {
 	public @ResponseBody byte[] getProfileImage(@PathVariable String profileId) throws IOException {
 		InputStream in = ProfileController.class.getClassLoader().getResourceAsStream(profileId + ".png");
 		if(in == null) {
-			System.exit(0); 
+			throw new RuntimeException("Profile image cannot be found - " + profileId);
 		} 
 		return IOUtils.toByteArray(in);
 	}
