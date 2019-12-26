@@ -18,8 +18,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -37,28 +40,31 @@ public class Plan implements Serializable {
 	private String planTitle;
 	private String city;
 	
-//	@JoinTable (
-//		        name = "plan_item",
-//		        joinColumns = @JoinColumn(name ="plan_id"),
-//		        inverseJoinColumns = @JoinColumn (name = "item_id"))
-//	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-//	@JoinColumn(name = "plan_id") // create a column in Table Item with column name "plan_id"
-	@Column(name="plan_items")
-	private String planItems;
+	@OneToMany(mappedBy="plan", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonManagedReference(value="plan-item")
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<Item> planItems;
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, 
 			CascadeType.DETACH, CascadeType.REFRESH}, 
 			fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
-	@JsonManagedReference
+	@JsonBackReference(value="user-plan")
 	private User user;
 	
-
-	public String getPlanItems() {
+	public void add(Item item) {
+	  if(planItems == null) {
+		  planItems = new ArrayList<>();
+	  }
+	  planItems.add(item);
+	  item.setPlan(this);
+	}
+	
+	public List<Item> getPlanItems() {
 		return planItems;
 	}
 
-	public void setPlanItems(String planItems) {
+	public void setPlanItems(List<Item> planItems) {
 		this.planItems = planItems;
 	}
 

@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tripplanner.tripplanner.dao.ItemDao;
@@ -12,6 +13,7 @@ import tripplanner.tripplanner.service.externalClient.SearchDescriptionFromWiki;
 import tripplanner.tripplanner.service.externalClient.SearchEventFromYelp;
 
 @RestController
+@RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ItemController {
 
@@ -22,7 +24,7 @@ public class ItemController {
   @Autowired private SearchDescriptionFromWiki searchDescriptionFromWiki;
 
   //	add all events into DB
-  @PostMapping("addAllItems")
+  @PostMapping("/addAllItems")
   public String addAllItems(@RequestParam("lat") double lat, @RequestParam("lon") double lon)
       throws JSONException {
 

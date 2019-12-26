@@ -7,7 +7,7 @@ public interface PlanService {
 //	public List<Plan> findAllPlansOfCurrentUser(int userId);
 //  public void addItemToPlan(Item item);
 
-    public Plan createNewPlan(Plan plan);
+    public Plan savePlan(Plan plan);
     
     public void deletePlanById(String planId);
 

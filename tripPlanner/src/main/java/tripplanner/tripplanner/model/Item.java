@@ -1,5 +1,6 @@
 package tripplanner.tripplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.search.annotations.*;
@@ -61,8 +62,23 @@ public class Item implements Serializable {
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinColumn (name = "location_id")
     private Location location;
+    
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, 
+			CascadeType.DETACH, CascadeType.REFRESH}, 
+			fetch = FetchType.EAGER)
+	@JoinColumn(name = "plan_id")
+	@JsonBackReference(value="plan-item")
+	private Plan plan;
 
-    public String getId() {
+    public Plan getPlan() {
+		return plan;
+	}
+
+	public void setPlan(Plan plan) {
+		this.plan = plan;
+	}
+
+	public String getId() {
         return id;
     }
 
