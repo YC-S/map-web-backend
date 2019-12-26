@@ -80,7 +80,7 @@ public class PlanController {
 	    }
 	    
 	    @PutMapping("/addPlan")
-	    public void updateItem(@RequestBody Plan plan) {
+	    public void updatePlan(@RequestBody Plan plan) {
 	    	planService.savePlan(plan);
 	    }
 	    
