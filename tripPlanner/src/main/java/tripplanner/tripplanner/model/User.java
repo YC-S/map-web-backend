@@ -47,7 +47,7 @@ public class User implements Serializable {
 
   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinColumn(name="profile_id")
-  @JsonBackReference
+  @JsonManagedReference
   private Profile cores_profile;
   
   @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

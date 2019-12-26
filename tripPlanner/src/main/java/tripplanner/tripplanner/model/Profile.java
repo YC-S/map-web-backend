@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -31,7 +33,7 @@ public class Profile {
 	
 	@OneToOne(mappedBy="cores_profile", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="userId")
-	@JsonManagedReference
+	@JsonBackReference
 	private User cores_user;
 	
 	@Column(name="description")
