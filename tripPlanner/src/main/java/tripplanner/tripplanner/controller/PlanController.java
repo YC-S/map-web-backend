@@ -55,7 +55,7 @@ public class PlanController {
 		}
 		
 		@DeleteMapping("/deleteItem/{planId}/{itemId}")
-		public void deleteItemFromPlan(@PathVariable("planId") String planId, @PathVariable("itemId") String itemId) {
+		public Plan deleteItemFromPlan(@PathVariable("planId") String planId, @PathVariable("itemId") String itemId) {
 			Plan curPlan = planService.getPlanById(planId);
 			List<Item> curPlanItems = curPlan.getPlanItems();
 			if(curPlanItems == null) {
@@ -64,7 +64,7 @@ public class PlanController {
 			Item deletedItem = itemService.getItemById(itemId);
 			curPlanItems.remove(deletedItem);
 			curPlan.setPlanItems(curPlanItems);
-			planDao.save(curPlan);
+			return planDao.save(curPlan);
 		}
 		
 		@GetMapping("/planItems/{planId}")
