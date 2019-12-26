@@ -42,11 +42,11 @@ public class UserController {
   //  @Autowired private UserService userService;
 
   @PostMapping("/users/login")
-  public User validateLogin(@RequestBody User user) {
+  public String validateLogin(@RequestBody User user) {
     User userInRepo = userService.findUserByUsername(user.getUsername());
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     if (encoder.matches(user.getPassword(), userInRepo.getPassword())) {
-      return userInRepo;
+      return userInRepo.getCores_profile().getId();
     } else {
       return null;
     }
@@ -59,7 +59,7 @@ public class UserController {
   }
 
   @PostMapping("/users/register")
-  public User registerUser(@RequestBody User user) throws Exception {
+  public String registerUser(@RequestBody User user) throws Exception {
     User userExists = userService.findUserByEmail(user.getEmail());
     if (userExists != null) {
       throw new Exception("there is already a user exist");
@@ -69,7 +69,7 @@ public class UserController {
       userService.saveUser(user);
       //String profileId = profileService.addOrUpdateProfile(profile);
       // return profileId, so frontend can redirect to profile page using profileId
-      return user;
+      return user.getCores_profile().getId();
     }
   }
   

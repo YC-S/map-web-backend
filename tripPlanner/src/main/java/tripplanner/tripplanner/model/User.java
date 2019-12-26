@@ -22,6 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Indexed;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Data
 @Builder
@@ -50,7 +51,7 @@ public class User implements Serializable {
   private Profile cores_profile;
   
   @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  @JsonBackReference
+  @JsonManagedReference(value="user_plan")
   private List<Plan> plans; 
 
   

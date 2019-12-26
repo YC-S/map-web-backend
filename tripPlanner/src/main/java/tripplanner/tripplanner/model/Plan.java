@@ -20,6 +20,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -50,7 +51,7 @@ public class Plan implements Serializable {
 			CascadeType.DETACH, CascadeType.REFRESH}, 
 			fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
-	@JsonManagedReference
+	@JsonBackReference(value="user_plan")
 	private User user;
 	
 
