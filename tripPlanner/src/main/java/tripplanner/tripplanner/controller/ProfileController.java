@@ -91,29 +91,33 @@ public class ProfileController {
 	}
 	
 	@PostMapping("/saveProfile")
-	public void addProfile(@RequestPart("json") Profile profile, @RequestPart("file") MultipartFile file) {
+	public Profile addProfile(@RequestPart("json") Profile profile, @RequestPart("file") MultipartFile file) {
 		try {
 			// save profile into DB first
 			String profileId = profileService.addOrUpdateProfile(profile);
 			// save profile image to disk
 			saveProfileImage(file, profileId);
+			return profileService.findProfileById(profileId);
 		} catch (Exception e) {
 			System.out.println("addProfile failure!");
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@PutMapping("/updateProfile")
-	public void updateProfile(@RequestPart("json") Profile profile, @RequestPart("file") MultipartFile file) {
+	public Profile updateProfile(@RequestPart("json") Profile profile, @RequestPart("file") MultipartFile file) {
 		try {
 			// save profile into DB first
 			String profileId = profileService.addOrUpdateProfile(profile);
 			// save profile image to disk
 			saveProfileImage(file, profileId);
+			return profileService.findProfileById(profileId);
 		} catch (Exception e) {
 			System.out.println("updateProfile failure!");
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	
